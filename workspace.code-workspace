@@ -1,0 +1,16 @@
+{
+"folders": [
+  {
+    "path": "App"
+  },
+  {
+    "path": "Server"
+  }
+],
+"settings": {
+"files.exclude": {
+  "**/.vscode/": true,
+  "**/.git": true,
+}
+}
+}
