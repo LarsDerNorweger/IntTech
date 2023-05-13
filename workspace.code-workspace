@@ -1,10 +1,10 @@
 {
 "folders": [
   {
-    "path": "App"
+    "path": "./App"
   },
   {
-    "path": "Server"
+    "path": "./Server"
   }
 ],
 "settings": {

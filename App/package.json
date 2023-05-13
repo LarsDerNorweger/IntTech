@@ -1,0 +1,14 @@
+{
+  "name": "int_tech_beleg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "watch": "npx tsc"
+  },
+  "author": "colin boettger",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.0.4"
+  }
+}

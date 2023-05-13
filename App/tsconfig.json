@@ -1,0 +1,20 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "ES2015",
+    "moduleResolution": "classic",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "outDir": "./.out/",
+    "removeComments": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es5",
+  },
+  "watchOptions": {
+    "synchronousWatchDirectory": true,
+  },
+  "include": [
+    "src/**/*.ts",
+  ]
+}
