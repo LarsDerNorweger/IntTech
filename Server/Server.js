@@ -11,6 +11,7 @@ function Server( hostname, port )
   {
     stop();
     listener.listen( port, hostname );
+    console.log("StartUpServer on:",hostname,':',port)
     started = true;
     root = r;
   };

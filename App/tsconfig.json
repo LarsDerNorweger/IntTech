@@ -6,6 +6,8 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "outDir": "./.out/",
+    "lib": ["ES2021",
+  "DOM"],
     "removeComments": true,
     "sourceMap": true,
     "strictNullChecks": true,
@@ -15,6 +17,6 @@
     "synchronousWatchDirectory": true,
   },
   "include": [
-    "src/**/*.ts",
+    "./src/**/*.ts",
   ]
 }

@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  
+  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
+  "typescript.format.semicolons": "insert",
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.vscode": true,
+    "node_modules/**": true,
+  }
+}
