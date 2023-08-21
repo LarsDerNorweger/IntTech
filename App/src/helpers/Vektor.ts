@@ -1,3 +1,9 @@
+/*------------------------------------------------
+/*  BA-Glauchau Beleg Internettechnologien
+/*
+/*  Autoren: Colin Böttger
+/*------------------------------------------------*/
+
 export { Vektor };
 
 export type vektor = number[];
