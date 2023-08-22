@@ -4,4 +4,6 @@
 /*  Autoren: Colin Böttger
 /*------------------------------------------------*/
 
-export function isColliding() { }
+import { area } from "./Area";
+
+export function isColliding(area1:area,area2:area):boolean {return false }
