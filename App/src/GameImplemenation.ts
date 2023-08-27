@@ -7,7 +7,7 @@ import { Orientation } from "./game/interfaces.js";
 import { Manager } from "./game/Manager.js";
 import { Vektor } from "./helpers/Vektor.js";
 
-let man = new Manager(document.body, Vektor.create(900, 300));
+let man = new Manager(document.body, Vektor.create(400, 900));
 
 man.addScene((g, c) =>
 {
@@ -26,7 +26,11 @@ man.addPlayer((g, c) =>
 
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
 }, Vektor.create(10, 20));
-man.addObstacele((g, c) => { }, 1);
+man.addObstacele((g, c) =>
+{
+  c.fillStyle = "#0FF";
+  c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
+}, 10, Vektor.create(30, 10));
 
 man.handleGameOver = () => { console.log("You have Lost"); };
 
