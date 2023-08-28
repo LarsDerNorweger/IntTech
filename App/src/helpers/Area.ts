@@ -28,7 +28,8 @@ class Area
 
   static area(area: area): number
   {
-    return area.size.reduce((a, x) => a *= x);
+    let t = area.size.reduce((a, x) => a *= x);
+    return Math.abs(t)
   }
 
   static doIntersect(area1: area, area2: area): boolean
