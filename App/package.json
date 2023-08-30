@@ -10,7 +10,7 @@
     "prebuild": "npm run test",
     "build": "npx tsc -p tsconfig.json"
   },
-  "author": "colin boettger",
+  "author": "colin boettger, oskar wolny",
   "license": "ISC",
   "dependencies": {
     "test": "^3.3.0",
