@@ -9,6 +9,20 @@ import { Vektor } from "./helpers/Vektor.js";
 
 let man = new Manager(document.body, Vektor.create(400, 900));
 
+/*
+TODO Oskar : 
+  - Benutzerobefläche
+  - Graphik => base64 im js
+  - css
+*/
+/*
+TODO Colin:
+ - Punktestand
+ - id für Obstacle
+ - makeskript => Singlepage
+ - minifiy js / css
+*/
+
 man.addScene((g, c) =>
 {
   c.fillStyle = "#0F0";
