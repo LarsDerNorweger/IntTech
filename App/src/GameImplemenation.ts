@@ -29,9 +29,9 @@ c.classList.add('container');
 let man = new Manager(c, Vektor.create(400, 900));
 
 
-man.addScene((g, c) =>
+man.addScene((g, c) =>     
 {
-  c.fillStyle = "#EEE";
+  c.fillStyle = "#3095A1";
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
 });
 
@@ -48,7 +48,7 @@ man.addPlayer((g, c) =>
 }, Vektor.create(10, 20));
 man.addObstacele((g, c) =>
 {
-  c.fillStyle = "#FFF";
+  c.fillStyle = "#EEE";
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
 }, 10, Vektor.create(30, 10));
 
