@@ -5,27 +5,33 @@
 
 import { Orientation } from "./game/interfaces.js";
 import { Manager } from "./game/Manager.js";
+import { create } from "./helpers/dom.js";
 import { Vektor } from "./helpers/Vektor.js";
 
-let man = new Manager(document.body, Vektor.create(400, 900));
 
 /*
 TODO Oskar : 
-  - Benutzerobefläche
-  - Graphik => base64 im js
-  - css
+- Benutzerobefläche
+- Graphik => base64 im js
+- css
 */
 /*
 TODO Colin:
- - Punktestand
- - id für Obstacle
- - makeskript => Singlepage
- - minifiy js / css
+- Punktestand
+- id für Obstacle
+- makeskript => Singlepage
+- minifiy js / css
 */
+
+let c = create('div', document.body);
+create('h1', c, "Hallo du geile Sau");
+c.classList.add('container');
+let man = new Manager(c, Vektor.create(400, 900));
+
 
 man.addScene((g, c) =>
 {
-  c.fillStyle = "#0F0";
+  c.fillStyle = "#EEE";
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
 });
 
@@ -42,7 +48,7 @@ man.addPlayer((g, c) =>
 }, Vektor.create(10, 20));
 man.addObstacele((g, c) =>
 {
-  c.fillStyle = "#0FF";
+  c.fillStyle = "#FFF";
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
 }, 10, Vektor.create(30, 10));
 
