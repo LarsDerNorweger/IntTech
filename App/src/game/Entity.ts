@@ -9,11 +9,14 @@ import { GraphikContext, Orientation, renderHandler } from "./interfaces.js";
 import { Manager } from "./Manager.js";
 
 
-export abstract class Entity {
-  get context(): GraphikContext { return this.m_context }
+export abstract class Entity
+{
+  get context(): GraphikContext { return this.m_context; }
   setSize(value: vektor) { this.m_context.size = Array.from(value); }
   setStart(value: vektor) { this.m_context.start = Array.from(value); }
-  constructor(renderHandle: renderHandler) {
+
+  constructor(renderHandle: renderHandler)
+  {
     this.m_renderHandler = renderHandle;
     this.m_context = {
       start: Vektor.create(0, 0),
@@ -23,7 +26,8 @@ export abstract class Entity {
     };
   }
 
-  render(context: CanvasRenderingContext2D) {
+  render(context: CanvasRenderingContext2D)
+  {
     this.m_renderHandler(this.m_context, context);
   }
 

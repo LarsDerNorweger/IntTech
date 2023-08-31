@@ -12,6 +12,17 @@ import { renderHandler } from "./interfaces.js";
 
 export abstract class PhysikalEntity extends Entity
 {
+  get boundaryBox(): area { return this.m_boundary; }
+
+  constructor(renderHandle: renderHandler)
+  {
+    super(renderHandle);
+    this.m_boundary = {
+      size: Vektor.create(0, 0),
+      begin: Vektor.create(0, 0),
+    };
+  }
+
   setSize(value: vektor)
   {
     super.setSize(value);
@@ -32,17 +43,6 @@ export abstract class PhysikalEntity extends Entity
   moveTo(position: vektor)
   {
     this.setStart(position);
-  }
-
-  get boundaryBox(): area { return this.m_boundary; }
-
-  constructor(renderHandle: renderHandler)
-  {
-    super(renderHandle);
-    this.m_boundary = {
-      size: Vektor.create(0, 0),
-      begin: Vektor.create(0, 0),
-    };
   }
 
   checkCollision(entity: PhysikalEntity): boolean
