@@ -77,7 +77,6 @@ export class Manager
 
   m_handleKey()
   {
-    console.log(this.m_key);
     if (!this.m_Player)
       return;
     let map = this.keyMap;

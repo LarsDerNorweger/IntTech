@@ -16,7 +16,6 @@ export class Player extends PhysikalEntity
   set jumpSize(value: number)
   {
     this.m_jumpsize = value / 2.4;
-    console.log(value);
   }
   get height(): number
   {
@@ -28,7 +27,6 @@ export class Player extends PhysikalEntity
   handleJump()
   {
     this.jump = this.m_jumpsize;
-    console.log(this.jump);
     this.m_context.orientation = Orientation.none;
   }
   handleLeft()
