@@ -4,6 +4,7 @@
 /*  Autoren: Colin Böttger
 /*------------------------------------------------*/
 
+import { Area, area } from "../helpers/Area.js";
 import { vektor, Vektor } from "../helpers/Vektor.js";
 import { Globals } from "./Globals.js";
 import { Obstacle } from "./obstacle.js";
@@ -22,6 +23,14 @@ export class ObstacleManager
 
   get count() { return this.m_obstacles.length; }
 
+  get boundaryBox(): area
+  {
+    let n = Vektor.create(0, 0);
+    if (this.m_obstacles.length <= 0)
+      return Area.create(n, n);
+    return this.m_obstacles[0].boundaryBox;
+  }
+
   constructor(size: vektor)
   {
     this.m_size = Array.from(size);
@@ -30,6 +39,11 @@ export class ObstacleManager
   assignObstacle(obstacle: Obstacle)
   {
     this.m_obstacles.push(obstacle);
+  }
+
+  prepareObstacles()
+  {
+    this.m_obstacles.reverse();
     let v = (this.m_size[1] / this.m_obstacles.length);
     for (let o of this.m_obstacles)
     {
@@ -52,6 +66,7 @@ export class ObstacleManager
       if (o.context.start[1] > this.m_size[1])
       {
         o.context.start[0] = Math.random() * this.m_size[0];
+        o.setNextId();
         n.push(o);
       }
       else ok.push(o);

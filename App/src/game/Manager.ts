@@ -23,6 +23,7 @@ export class Manager
 
   set handleGameOver(callback: (instanciated: boolean) => void) { this.m_handleGameOver = callback; }
 
+
   constructor(parent: HTMLElement, size: vektor)
   {
     let canvas = document.createElement('canvas');
@@ -108,7 +109,17 @@ export class Manager
     s[0] = (this.m_size[0] / 2) - size[0] / 2;
     this.m_Player.setStart(s);
     this.m_Player.setSize(size);
+    this.setPlayerParameters();
+  }
+
+  private setPlayerParameters()
+  {
+    if (!this.m_Player)
+      return;
     this.m_Player.jumpSize = (this.m_size[1] / this.m_obstaclManager.count) * 1.3;
+    let tmp = Math.floor(this.m_size[0] / 35);
+    this.m_Player.offset = tmp;
+    console.log(tmp);
   }
 
   addObstacele(handler: renderHandler, maxCount: number, size: vektor)
@@ -119,9 +130,8 @@ export class Manager
       o.setSize(size);
       this.m_obstaclManager.assignObstacle(o);
     }
-    if (this.m_Player)
-      this.m_Player.jumpSize = (this.m_size[1] / this.m_obstaclManager.count) * 1.3;
-
+    this.m_obstaclManager.prepareObstacles();
+    this.setPlayerParameters();
   }
 
   private performCalculation()

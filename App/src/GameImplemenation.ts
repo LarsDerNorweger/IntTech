@@ -50,7 +50,9 @@ man.addObstacele((g, c) =>
 {
   c.fillStyle = "#EEE";
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
-}, 10, Vektor.create(30, 10));
+  c.fillStyle = "#000";
+  c.fillText(g.id + '', g.start[0], g.start[1] + g.size[1]);
+}, 10, Vektor.create(50, 10));
 
 man.handleGameOver = () => { console.log("You have Lost"); };
 
