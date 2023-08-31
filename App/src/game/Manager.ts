@@ -22,7 +22,12 @@ export class Manager
   };
 
   set handleGameOver(callback: (instanciated: boolean) => void) { this.m_handleGameOver = callback; }
-
+  set handleScoreChange(callback: (score: number) => void)
+  {
+    if (this.m_Player)
+      this.m_Player.onScoreChange = callback;
+    this.m_fireScoreChange = callback;
+  }
 
   constructor(parent: HTMLElement, size: vektor)
   {
@@ -104,6 +109,8 @@ export class Manager
   addPlayer(handler: renderHandler, size: vektor)
   {
     this.m_Player = new Player(handler);
+    if (this.m_fireScoreChange)
+      this.m_Player.onScoreChange = this.m_fireScoreChange;
     let s = Vektor.subtract(this.m_size, size);
     s = Vektor.subtract(s, [0, this.m_size[1] / 3]);
     s[0] = (this.m_size[0] / 2) - size[0] / 2;
@@ -171,6 +178,7 @@ export class Manager
 
 
   private m_handleGameOver?: (value: boolean) => void;
+  private m_fireScoreChange?: (value: number) => void;
   private m_intervallHandle: number | null = null;
   private m_scene?: Scene;
   private m_buttom?: Obstacle;

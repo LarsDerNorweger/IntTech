@@ -55,5 +55,5 @@ man.addObstacele((g, c) =>
 }, 10, Vektor.create(50, 10));
 
 man.handleGameOver = () => { console.log("You have Lost"); };
-
+man.handleScoreChange = (s) => { console.log("score:", s); };
 man.startGameLoop();

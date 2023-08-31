@@ -13,12 +13,12 @@ import { Player } from "./player.js";
 
 export class ObstacleManager
 {
-  hasCollision(player: Player): boolean
+  hasCollision(player: Player): Obstacle | undefined
   {
     for (let o of this.m_obstacles)
       if (o.checkCollision(player) && o.boundaryBox.begin[1] > player.boundaryBox.begin[1])
-        return true;
-    return false;
+        return o;
+    return undefined;
   }
 
   get count() { return this.m_obstacles.length; }
@@ -57,6 +57,7 @@ export class ObstacleManager
   {
     if (amount < 0)
       return;
+
     let ok = [];
     let n = [];
     for (let o of this.m_obstacles)
@@ -91,10 +92,15 @@ export class ObstacleManager
   checkAndHandleCollision(player: Player)
   {
     let res = Globals.gravity;
-    if (this.hasCollision(player))
+    let c = this.hasCollision(player);
+    if (c)
+    {
       res = 0;
+      player.score = c.context.id;
+    }
+
     if (!player.doJump)
-      this.shiftObstacles(this.m_size[1] / 2 - player.height);
+      this.shiftObstacles((2 * this.m_size[1] / 3) - player.height);
     return res;
   }
 
