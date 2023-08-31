@@ -53,16 +53,19 @@ export class ObstacleManager
     }
   }
 
-  shiftObstacles(amount: number)
+  shiftObstacles(amount: number): number
   {
     if (amount < 0)
-      return;
+      return 0;
 
     let ok = [];
     let n = [];
+    let f = this.m_size[1] / (this.m_size[1] - (this.m_size[1] / 3));
+    console.log(f);
+    let ax = Globals.gravity * f;
     for (let o of this.m_obstacles)
     {
-      o.context.start[1] += Globals.gravity / 2;
+      o.context.start[1] += ax;
 
       if (o.context.start[1] > this.m_size[1])
       {
@@ -81,6 +84,7 @@ export class ObstacleManager
         o.setStart(Vektor.create(o.context.start[0], this.m_obstacles.indexOf(o) * v));
       else o.setStart(o.context.start);
     }
+    return ax;
   }
 
   render(context: CanvasRenderingContext2D)
@@ -89,7 +93,7 @@ export class ObstacleManager
       o.render(context);
   }
 
-  checkAndHandleCollision(player: Player)
+  HandleCollisionAndGetGravity(player: Player)
   {
     let res = Globals.gravity;
     let c = this.hasCollision(player);
@@ -100,7 +104,7 @@ export class ObstacleManager
     }
 
     if (!player.doJump)
-      this.shiftObstacles((2 * this.m_size[1] / 3) - player.height);
+      res += this.shiftObstacles((2 * this.m_size[1] / 3) - player.height);
     return res;
   }
 

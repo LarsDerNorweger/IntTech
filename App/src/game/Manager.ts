@@ -143,7 +143,7 @@ export class Manager
 
   private performCalculation()
   {
-    this.m_Player && this.m_Player.performGameCycle(this.m_obstaclManager.checkAndHandleCollision(this.m_Player));
+    this.m_Player && this.m_Player.performGameCycle(this.m_obstaclManager.HandleCollisionAndGetGravity(this.m_Player));
     this.m_checkBoundarys();
   }
 
