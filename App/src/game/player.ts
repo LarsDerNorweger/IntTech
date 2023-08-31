@@ -20,9 +20,9 @@ export class Player extends PhysikalEntity
     this.m_lastscore = value;
     this.fireScoreChange && this.fireScoreChange(this.m_lastscore);
   }
-  set jumpSize(value: number) { this.m_jumpsize = value / 2.4; }
+  set jumpSize(value: number) { this.m_jumpsize = Math.ceil(value / 2.4); }
   get height(): number { return this.boundaryBox.begin[1]; }
-  set offset(value: number) { this.m_offset = value; }
+  set offset(value: number) { this.m_offset = Math.ceil(value); }
 
   get doJump(): boolean { return this.m_jump > 0; }
 
@@ -53,7 +53,7 @@ export class Player extends PhysikalEntity
       else if (this.m_position < 0)
         this.m_position += 2;
     }
-    this.move([this.m_position, -this.m_jump + gravity]);
+    this.move([this.m_position, Math.ceil(-this.m_jump + gravity)]);
   }
 
   private m_offset = 0;
