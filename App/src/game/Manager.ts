@@ -39,10 +39,15 @@ export class Manager
     if (ctx)
       this.m_context = ctx;
     else throw new Error();
-    window.onkeydown = this.mhandleKeyPress.bind(this);
-    window.onkeyup = this.mhandleKeyPress.bind(this);
+    window.onkeydown = (e) =>
+    {
+      this.m_key = e.key;
+      this.m_handleKey();
+    };
+    window.onkeyup = () => this.m_key = undefined;
     this.m_obstaclManager = new ObstacleManager(size);
     this.m_size = size;
+
   }
 
   startGameLoop(executionTime?: number)
@@ -54,36 +59,23 @@ export class Manager
       this.performCalculation();
       window.requestAnimationFrame(this.performRender.bind(this));
     }, executionTime || 10);
+    this.m_keyTimer = setInterval(this.m_handleKey.bind(this), 50);
   }
 
   stopGameLoop(propagate?: boolean)
   {
     if (this.m_intervallHandle)
       window.clearInterval(this.m_intervallHandle);
+    if (this.m_keyTimer)
+      window.clearInterval(this.m_keyTimer);
     this.m_intervallHandle = null;
     if (this.m_handleGameOver)
       this.m_handleGameOver(!propagate);
   }
 
-
-  mhandleKeyPress(event: KeyboardEvent)
-  {
-    if (this.m_keyTimer)
-    {
-      clearInterval(this.m_keyTimer);
-      this.m_keyTimer = undefined;
-      if (this.m_key == event.key)
-        return;
-    }
-
-    this.m_key = event.key;
-    this.m_handleKey();
-    this.m_keyTimer = setInterval(this.m_handleKey.bind(this), 50);
-  }
-
   m_handleKey()
   {
-    if (!this.m_Player)
+    if (!this.m_key || !this.m_Player)
       return;
     let map = this.keyMap;
     switch (this.m_key)
@@ -185,6 +177,7 @@ export class Manager
   private m_Player?: Player;
   private m_key?: string;
   private m_keyTimer?: number;
+  private m_lock?: Promise<void>;
   private m_obstaclManager: ObstacleManager;
   private static m_lastID = 0;
 }
