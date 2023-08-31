@@ -116,7 +116,7 @@ export class Manager
     if (!this.m_Player)
       return;
     this.m_Player.jumpSize = (this.m_size[1] / this.m_obstaclManager.count) * 1.3;
-    let tmp = Math.floor(this.m_size[0] / 35);
+    let tmp = Math.floor(this.m_size[0] / 50);
     this.m_Player.offset = tmp;
     console.log(tmp);
   }
