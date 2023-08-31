@@ -2,19 +2,16 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Watch Application",
-      "command": "npm run watch",
+      "label": "run Server",
+      "command": "node Server.js",
       "type": "shell",
+      "group": "build",
       "args": [],
       "runOptions": {
         "runOn": "folderOpen"
       },
-      "problemMatcher": [
-        "$tsc"
-      ],
       "presentation": {
         "reveal": "always",
-        "group": "build"
       }
     }
   ]
