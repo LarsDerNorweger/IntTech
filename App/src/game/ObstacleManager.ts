@@ -15,8 +15,9 @@ export class ObstacleManager
 {
   hasCollision(player: Player): Obstacle | undefined
   {
+    let tmp = Vektor.add(player.boundaryBox.begin, player.boundaryBox.size)[1] - 1;
     for (let o of this.m_obstacles)
-      if (o.checkCollision(player) && o.boundaryBox.begin[1] > player.boundaryBox.begin[1])
+      if (o.checkCollision(player) && o.boundaryBox.begin[1] >= tmp)
         return o;
     return undefined;
   }
