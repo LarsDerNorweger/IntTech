@@ -46,10 +46,11 @@ export class ObstacleManager
   {
     this.m_obstacles.reverse();
     let v = (this.m_size[1] / this.m_obstacles.length);
+    let s = this.m_size[0] - this.boundaryBox.size[0];
     for (let o of this.m_obstacles)
     {
       let y = this.m_obstacles.indexOf(o) * v;
-      let x = Math.random() * this.m_size[0];
+      let x = Math.random() * s;
       o.setStart(Vektor.create(x, y));
     }
   }
@@ -64,13 +65,14 @@ export class ObstacleManager
     let f = this.m_size[1] / (this.m_size[1] - (this.m_size[1] / 3));
     console.log(f);
     let ax = Globals.gravity * f;
+    let s = this.m_size[0] - this.boundaryBox.size[0];
     for (let o of this.m_obstacles)
     {
       o.context.start[1] += ax;
 
       if (o.context.start[1] > this.m_size[1])
       {
-        o.context.start[0] = Math.random() * this.m_size[0];
+        o.context.start[0] = Math.random() * s;
         o.setNextId();
         n.push(o);
       }
