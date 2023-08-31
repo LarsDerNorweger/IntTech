@@ -24,7 +24,7 @@ TODO Colin:
 */
 
 let c = create('div', document.body);
-create('h1', c, "Hallo du geile Sau");
+create('h1', c, "Ein komisches Spiel");
 c.classList.add('container');
 let man = new Manager(c, Vektor.create(400, 900));
 
