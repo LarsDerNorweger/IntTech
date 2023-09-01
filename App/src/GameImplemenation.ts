@@ -9,19 +9,7 @@ import { create } from "./helpers/dom.js";
 import { Vektor } from "./helpers/Vektor.js";
 
 
-/*
-TODO Oskar : 
-- Benutzerobefläche
-- Graphik => base64 im js
-- css
-*/
-/*
-TODO Colin:
-- Punktestand
-- id für Obstacle
-- makeskript => Singlepage
-- minifiy js / css
-*/
+
 
 let c = create('div', document.body);
 create('h1', c, "Ein komisches Spiel");
