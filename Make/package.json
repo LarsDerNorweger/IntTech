@@ -1,0 +1,17 @@
+{
+  "name": "toolchain",
+  "version": "1.0.0",
+  "description": "Toolchain to develop Webapplications",
+  "main": "make.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "minify": "^10.5.2",
+    "minifycss": "^1.0.1",
+    "rollup": "^3.28.1",
+    "typescript": "^5.2.2"
+  }
+}

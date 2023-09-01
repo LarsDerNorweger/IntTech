@@ -1,3 +1,5 @@
 App/node_modules/**
 App/.out/**
 App/.outTest/**
+Make/node_modules/**
+Make/package-lock.json
