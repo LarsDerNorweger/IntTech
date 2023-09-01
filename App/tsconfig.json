@@ -1,5 +1,4 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
     "outDir": ".out",
     "target": "ES2020",
