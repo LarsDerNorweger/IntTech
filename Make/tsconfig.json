@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": ".out",
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "allowJs": false,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "strict": true, // Should be true if possible!
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

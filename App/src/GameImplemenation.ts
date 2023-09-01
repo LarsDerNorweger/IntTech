@@ -34,6 +34,7 @@ man.addPlayer((g, c) =>
 
   c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
 }, Vektor.create(10, 20));
+
 man.addObstacele((g, c) =>
 {
   c.fillStyle = "#EEE";
