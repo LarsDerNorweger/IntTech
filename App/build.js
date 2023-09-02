@@ -2,10 +2,8 @@ const run = require('../Make/.out/make')
 
 run.run({
     tsconfig: "tsconfig",
-    finalResult: ".dist",
     typescript: "src/main.ts",
+    singleFile: true,
     css: "css",
-    module: true,
     minify: false,
-    singleFile: false,
 }, __dirname)

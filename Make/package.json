@@ -9,9 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs": "^0.0.1-security",
     "minify": "^10.5.2",
     "minifycss": "^1.0.1",
     "rollup": "^3.28.1",
-    "typescript": "^5.2.2"
+    "rollup-plugin-dts": "^6.0.1"
+    },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/node": "^20.5.7"
   }
 }

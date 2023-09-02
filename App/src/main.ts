@@ -5,3 +5,4 @@
 /*------------------------------------------------*/
 
 import "./GameImplemenation.js";
+export * from './helpers/Area.js';
