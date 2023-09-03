@@ -3,7 +3,7 @@
     => entspricht höchster bisher erreichter Plattform
 - id für Obstacle
 - Server unterstützt Css
-
+- make für Javascript hinzugefügt => es kann eine einzelne Javascript datei erszeugt werden.
 # TODO 
 
 ## Oskar : 
@@ -14,5 +14,6 @@
 
 ## Colin:
 - PWA (manifest / serviceworker)
-- makeskript => Singlepage
-- minifiy js / css
+- minifiy js 
+- minifiy css
+- sass support 

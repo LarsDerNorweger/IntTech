@@ -12,7 +12,7 @@ export {
 interface Options {
     tsconfig:string,
     typescript:string,
-    css:string,
+    sass:string,
     minify:boolean,
     singleFile:boolean,
 }
