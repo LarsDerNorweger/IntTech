@@ -15,7 +15,19 @@
       "presentation": {
         "reveal": "always",
         "group": "build"
-      }
+      },
+      "group": "build"
+    },
+    {
+      "label": "Build Application",
+      "command": "npm run build",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always",
+        "group": "build"
+      },
+      "group": "build"
     }
   ]
 }
