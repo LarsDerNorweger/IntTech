@@ -11,7 +11,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "minify": "^10.5.2",
-    "minifycss": "^1.0.1",
+    "sass": "latest",
     "rollup": "^3.28.1",
     "rollup-plugin-dts": "^6.0.1"
     },

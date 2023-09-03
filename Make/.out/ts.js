@@ -5,26 +5,27 @@ const ts = require("typescript");
 const path = require("path");
 const fs = require("fs");
 const helper_1 = require("./helper");
-function readTsConfig(path) {
-    if (!path.endsWith('.json'))
-        path += ".json";
-    if (!fs.existsSync(path))
+function readTsConfig(base, file) {
+    let p = (0, helper_1.getAbsoluteOrResolve)(base, file);
+    if (!p.endsWith('.json'))
+        p += ".json";
+    if (!fs.existsSync(p))
         throw Error("Cant find tsconfig");
     try {
-        let res = new TextDecoder().decode(fs.readFileSync(path));
-        return JSON.parse(res)["compilerOptions"];
+        let buf = new TextDecoder().decode(fs.readFileSync(p));
+        let res = JSON.parse(buf)["compilerOptions"];
+        console.log(`Read Typescript from "${p}"`);
+        return res;
     }
     catch (e) {
-        throw Error("Cant read tsconfig");
+        throw Error("Unabele to process tsconfig");
     }
 }
 exports.readTsConfig = readTsConfig;
 function compileTypescript(base, opt, tsconfig) {
-    if (tsconfig.outDir)
-        (0, helper_1.cleanUp)(path.join(base, tsconfig.outDir));
     const host = createCompilerHost(tsconfig, [], base);
-    const program = ts.createProgram([path.join(base, opt.typescript)], tsconfig, host);
-    program.emit();
+    const program = ts.createProgram([(0, helper_1.getAbsoluteOrResolve)(base, opt.typescript)], tsconfig, host);
+    let res = program.emit();
 }
 exports.compileTypescript = compileTypescript;
 function createCompilerHost(options, moduleSearchLocations, base) {
@@ -42,10 +43,10 @@ function createCompilerHost(options, moduleSearchLocations, base) {
         useCaseSensitiveFileNames: () => ts.sys.useCaseSensitiveFileNames,
         fileExists,
         readFile,
-        resolveModuleNames
+        resolveModuleNames,
     };
     function writeFile(fileName, content) {
-        let tg = path.join(base, fileName);
+        let tg = (0, helper_1.getAbsoluteOrResolve)(base, fileName);
         ts.sys.writeFile(tg, content);
     }
     function fileExists(fileName) {
@@ -80,11 +81,5 @@ function createCompilerHost(options, moduleSearchLocations, base) {
             }
         }
         return resolvedModules;
-    }
-    function compile(sourceFiles, moduleSearchLocations) {
-        const options = {
-            module: ts.ModuleKind.AMD,
-            target: ts.ScriptTarget.ES5
-        };
     }
 }

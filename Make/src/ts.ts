@@ -1,34 +1,35 @@
 import * as ts from "typescript";
 import * as path from "path";
 import * as fs from "fs";
-import { cleanUp } from "./helper";
+import { cleanUp, getAbsoluteOrResolve } from "./helper";
 import { Options } from "./interfaces";
 
 
-export function readTsConfig(path: string): ts.CompilerOptions {
-  if (!path.endsWith('.json'))
-      path += ".json";
-  if (!fs.existsSync(path))
-      throw Error("Cant find tsconfig")
+export function readTsConfig(base:string,file: string): ts.CompilerOptions {
+  let p = getAbsoluteOrResolve(base,file)
+  if (!p.endsWith('.json'))
+    p += ".json";
+  if (!fs.existsSync(p))
+    throw Error("Cant find tsconfig")
+
   try {
-      let res = new TextDecoder().decode(fs.readFileSync(path))
-      return JSON.parse(res)["compilerOptions"] as ts.CompilerOptions
+    let buf = new TextDecoder().decode(fs.readFileSync(p))
+    let res = JSON.parse(buf)["compilerOptions"] as ts.CompilerOptions
+    console.log(`Read Typescript from "${p}"`)
+    return res
   }
   catch (e) {
-      throw Error("Cant read tsconfig")
+    throw Error("Unabele to process tsconfig")
   }
 }
 
-export function compileTypescript(base :string,opt:Options,tsconfig: ts.CompilerOptions) {
-  if(tsconfig.outDir)
-      cleanUp(path.join(base,tsconfig.outDir))
-
-  const host = createCompilerHost(tsconfig, [],base);
-  const program = ts.createProgram([path.join(base,opt.typescript)], tsconfig, host);
-  program.emit()
+export function compileTypescript(base: string, opt: Options, tsconfig: ts.CompilerOptions) {
+  const host = createCompilerHost(tsconfig, [], base);
+  const program = ts.createProgram([getAbsoluteOrResolve(base, opt.typescript)], tsconfig, host);
+  let res = program.emit()
 }
 
-function createCompilerHost(options: ts.CompilerOptions, moduleSearchLocations: string[],base:string): ts.CompilerHost {
+function createCompilerHost(options: ts.CompilerOptions, moduleSearchLocations: string[], base: string): ts.CompilerHost {
   options.module = ts.ModuleKind[options.module!] as unknown as ts.ModuleKind
   options.target = ts.ScriptTarget[options.target!] as unknown as ts.ScriptTarget
   console.log(options.module)
@@ -44,12 +45,12 @@ function createCompilerHost(options: ts.CompilerOptions, moduleSearchLocations: 
     useCaseSensitiveFileNames: () => ts.sys.useCaseSensitiveFileNames,
     fileExists,
     readFile,
-    resolveModuleNames
+    resolveModuleNames,
   };
 
-  function writeFile(fileName:string, content:string){
-    let tg = path.join(base,fileName)
-    ts.sys.writeFile(tg,content)
+  function writeFile(fileName: string, content: string) {
+    let tg = getAbsoluteOrResolve(base, fileName)
+    ts.sys.writeFile(tg, content)
   }
 
   function fileExists(fileName: string): boolean {
@@ -93,12 +94,4 @@ function createCompilerHost(options: ts.CompilerOptions, moduleSearchLocations: 
     }
     return resolvedModules;
   }
-  
-  function compile(sourceFiles: string[], moduleSearchLocations: string[]): void {
-      const options: ts.CompilerOptions = {
-          module: ts.ModuleKind.AMD,
-          target: ts.ScriptTarget.ES5
-        };
-    }
 }
- 

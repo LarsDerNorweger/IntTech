@@ -5,7 +5,7 @@
     "module": "ESNext",
     "allowJs": true,
     "removeComments": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "skipLibCheck": true,
     "declaration": false,
     "strict": true

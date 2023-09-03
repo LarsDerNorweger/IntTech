@@ -60,8 +60,8 @@ export class ObstacleManager
     if (amount < 0)
       return 0;
 
-    let ok = [];
-    let n = [];
+    let ok: Obstacle[] = [];
+    let n: Obstacle[] = [];
     let f = this.m_size[1] / (this.m_size[1] - (this.m_size[1] / 3));
     console.log(f);
     let ax = Globals.gravity * f;

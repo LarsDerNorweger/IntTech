@@ -3,21 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.rollupFiles = void 0;
 const rollup_1 = require("rollup");
 const dts = require('rollup-plugin-dts');
-const path = require("path");
-async function rollupFiles(inputFile, outFile, format) {
-    if (!path.isAbsolute(inputFile) || !path.isAbsolute(outFile))
-        throw Error('Can only Procesess absolute Paths');
-    if (!inputFile.endsWith('.d.ts')) {
-        inputFile = inputFile.replace('.ts', '.js');
-        outFile = outFile.replace('.ts', '.js');
-        let bundle = await (0, rollup_1.rollup)({ input: inputFile });
-        return await bundle.write({ file: outFile, format: 'esm' });
+const helper_1 = require("./helper");
+async function rollupFiles(base, inpFile, outFile) {
+    let out = (0, helper_1.getAbsoluteOrResolve)(base, outFile);
+    let inp = (0, helper_1.getAbsoluteOrResolve)(base, inpFile);
+    if (!inp.endsWith('.d.ts')) {
+        inp = inp.replace('.ts', '.js');
+        out = out.replace('.ts', '.js');
+        let bundle = await (0, rollup_1.rollup)({ input: inp });
+        return await bundle.write({ file: out, format: 'esm' });
     }
-    if (!outFile.endsWith('.d.ts')) {
-        outFile = outFile.replace('.ts', '.d.ts');
-        outFile = outFile.replace('.js', '.d.ts');
+    if (!out.endsWith('.d.ts')) {
+        out = out.replace('.ts', '.d.ts');
+        out = out.replace('.js', '.d.ts');
     }
-    let bundle = await (0, rollup_1.rollup)({ input: inputFile, plugins: [dts.default()] });
-    await bundle.write({ file: outFile, format: 'esm' });
+    let bundle = await (0, rollup_1.rollup)({ input: inp, plugins: [dts.default()] });
+    await bundle.write({ file: out, format: 'esm' });
 }
 exports.rollupFiles = rollupFiles;

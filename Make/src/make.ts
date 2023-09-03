@@ -8,23 +8,40 @@ import { Options } from "./interfaces";
 import { basename, join } from 'path'
 import { compileTypescript, readTsConfig } from "./ts";
 import { rollupFiles } from "./js";
-import { cleanUp } from "./helper";
+import { cleanUp, getAbsoluteOrResolve } from "./helper";
 import * as ts from "typescript";
 import { rmSync } from "fs";
+import { compileSass } from "./css";
 
 export async function run(Options: Options, base: string) {
     checkOptions(Options)
-    if (Options.tsconfig && Options.typescript)
-        await processJavascript(base, Options);
+    let tsconfig = readTsConfig(base,Options.tsconfig);
+    if (!tsconfig.outDir)
+        throw Error('Need tsconfig.outDir to Process Files');
+
+    cleanUpWorkingSpace(base, tsconfig)
+
+    if (Options.typescript)
+        await processJavascript(base, Options, tsconfig);
+    if (Options.sass)
+        processCss(base, Options, tsconfig)
 }
 
-async function processJavascript(base: string, Options: Options) {
-    console.log("Process Javascript")
-    let tsconfig = readTsConfig(join(base, Options.tsconfig));
+async function processCss(base: string, Options: Options, tsconfig: ts.CompilerOptions) {
     if (!tsconfig.outDir)
-        throw Error('Need Outdir to Process Files');
+        throw Error('Need tsconfig.outDir to Process Css');
+    compileSass(base, Options, tsconfig.outDir,tsconfig.sourceMap)
+}
+
+function cleanUpWorkingSpace(base: string, tsconfig: ts.CompilerOptions) {
+    if (!tsconfig.outDir)
+        throw Error("Need tsconfig.outDir to cleanUp");
+
+    cleanUp(getAbsoluteOrResolve(base,tsconfig.outDir));
+}
+async function processJavascript(base: string, Options: Options, tsconfig: ts.CompilerOptions) {
+    console.log("Process Javascript")
     let n = basename(Options.typescript);
-    cleanUp(join(base, tsconfig.outDir));
     if (Options.minify)
         await packJS(base, tsconfig, Options, n);
     else compileTypescript(base, Options, tsconfig);
@@ -41,18 +58,19 @@ async function packJS(base: string, tsconfig: ts.CompilerOptions, Options: Optio
         compileTypescript(base, Options, tsconfig);
 
         await rollupFiles(
-            join(base, tmp, FileName),
-            join(base, out, FileName),
-            tsconfig.declaration ? 'esm' : 'amd'
+            base,
+            join(tmp, FileName),
+            join(out, FileName)
         );
+
         if (!tsconfig.declaration)
             return
 
         let n = FileName.replace('.ts', '.d.ts');
         rollupFiles(
-            join(base, tmp, n),
-            join(base, out, n),
-            tsconfig.types ? 'esm' : 'amd'
+            base,
+            join(tmp, n),
+            join(out, n)
         );
     }
     catch (e) {
@@ -60,6 +78,7 @@ async function packJS(base: string, tsconfig: ts.CompilerOptions, Options: Optio
     }
     finally {
         rmSync(tmp, { recursive: true });
+        tsconfig.outDir = out
     }
 }
 

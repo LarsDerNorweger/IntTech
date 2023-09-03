@@ -6,21 +6,24 @@
 
 import { rollup, ModuleFormat } from "rollup"
 const dts = require('rollup-plugin-dts');
-import * as path from "path"
+import { getAbsoluteOrResolve } from "./helper";
 
-export async function rollupFiles(inputFile: string, outFile: string, format: ModuleFormat) {
-    if (!path.isAbsolute(inputFile) || !path.isAbsolute(outFile))
-        throw Error('Can only Procesess absolute Paths')
-    if (!inputFile.endsWith('.d.ts')) {
-        inputFile = inputFile.replace('.ts', '.js')
-        outFile = outFile.replace('.ts', '.js')
-        let bundle = await rollup({ input: inputFile })
-        return await bundle.write({ file: outFile, format: 'esm' })
+export async function rollupFiles(base:string,inpFile: string, outFile: string) {
+    let out = getAbsoluteOrResolve(base,outFile)
+    let inp = getAbsoluteOrResolve(base,inpFile)
+
+    if (!inp.endsWith('.d.ts')) {
+        inp = inp.replace('.ts', '.js')
+        out = out.replace('.ts', '.js')
+        let bundle = await rollup({ input: inp })
+        return await bundle.write({ file: out, format: 'esm' })
     }
-    if(!outFile.endsWith('.d.ts')){
-        outFile = outFile.replace('.ts', '.d.ts')
-        outFile = outFile.replace('.js', '.d.ts')
+
+    if (!out.endsWith('.d.ts')) {
+        out = out.replace('.ts', '.d.ts')
+        out = out.replace('.js', '.d.ts')
     }
-    let bundle = await rollup({ input: inputFile ,plugins:[dts.default()]})
-    await bundle.write({ file: outFile, format: 'esm' })
+
+    let bundle = await rollup({ input: inp, plugins: [dts.default()] })
+    await bundle.write({ file: out, format: 'esm' })
 }
