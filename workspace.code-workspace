@@ -4,7 +4,12 @@
     "path": "./App"
   },
   {
+    "name":"DevServer",
     "path": "./Server"
+  }
+  {
+    "name":"Deployment",
+    "path": "./deployment"
   }
   {
     "path": "./Make"
