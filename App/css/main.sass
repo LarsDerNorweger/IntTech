@@ -1,17 +1,21 @@
-html
-    height: 100%
-    width: 100%
-    body
-        height: 100%
-        width: 100%
-        margin: 0
-        padding: 0
+@import '../lib/pico-1.5.9/pico.css'
 
-.container
-    height: 100%
+main
+  height: 100vh
+
+#GameGrid
+  display: grid
+  grid-template-columns: 10% 1fr 10%
+  grid-template-rows: minmax(0,1fr) 10%
+  grid-template-areas: "info game ." ".button ."
+  height: 100%
+  #GameInfo
+    grid-area: info
+  #Game
+    grid-area: game
     display: flex
-    flex-direction: column
-    align-items: center
-
+    justify-content: center
     canvas
-        height: 90%
+      height: 100%
+  #GameButton
+    grid-area: button
