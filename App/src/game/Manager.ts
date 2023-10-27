@@ -58,7 +58,10 @@ export class Manager
       this.stopGameLoop();
     if (!this.m_Player)
       return;
-    this.startGame(this.m_Player.context.size);
+    if (this.m_wasStarted)
+      this.resetGame(this.m_Player.context.size);
+
+    this.m_wasStarted = true;
     this.m_intervallHandle = window.setInterval(() =>
     {
       this.performCalculation();
@@ -107,27 +110,37 @@ export class Manager
   addPlayer(handler: renderHandler, size: vektor)
   {
     this.m_Player = new Player(handler);
-    this.startGame(size);
+    this.renderPlayer(size);
     this.performRender();
   }
 
-  private startGame(size: vektor)
+  private resetGame(size: vektor)
+  {
+    if (!this.m_Player)
+      return;
+    this.renderPlayer(size);
+    this.m_Player.reset();
+    this.m_obstaclManager.resetObstacles();
+  }
+
+  private renderPlayer(size: vektor)
   {
     if (!this.m_Player)
       return;
     if (this.m_fireScoreChange)
+    {
       this.m_Player.onScoreChange = this.m_fireScoreChange;
+      this.m_fireScoreChange(0);
+    }
+
     let s = Vektor.subtract(this.m_size, size);
     s = Vektor.subtract(s, [0, this.m_size[1] / 3]);
     s[0] = (this.m_size[0] / 2) - size[0] / 2;
     this.m_Player.setStart(s);
     this.m_Player.setSize(size);
     this.setPlayerParameters();
-
-    this.m_Player.reset();
-    this.m_obstaclManager.resetObstacles();
-    this.m_fireScoreChange && this.m_fireScoreChange(0);
   }
+
 
   private setPlayerParameters()
   {
@@ -196,7 +209,7 @@ export class Manager
   private m_Player?: Player;
   private m_key?: string;
   private m_keyTimer?: number;
-  private m_lock?: Promise<void>;
   private m_obstaclManager: ObstacleManager;
   private static m_lastID = 0;
+  private m_wasStarted: boolean = false;
 }
