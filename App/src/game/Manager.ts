@@ -5,6 +5,7 @@
 /*------------------------------------------------*/
 
 import { vektor, Vektor } from "../helpers/Vektor.js";
+import { create } from "../helpers/dom.js";
 import { ObstacleManager } from "./ObstacleManager.js";
 import { keyMap, renderHandler } from "./interfaces.js";
 import { Obstacle } from "./obstacle.js";
@@ -32,17 +33,17 @@ export class Manager
 
   constructor(parent: HTMLElement, size: vektor)
   {
-    let canvas = document.createElement('canvas');
-    parent.appendChild(canvas);
+    let canvas = create('canvas', parent);
     canvas.width = size[0];
     canvas.height = size[1];
     let ctx = canvas.getContext("2d");
     if (ctx)
       this.m_context = ctx;
     else throw new Error();
+
     window.onkeydown = (e) =>
     {
-      this.m_key = e.key;
+      this.m_key = e.key.toLowerCase();
       this.m_handleKey();
     };
     window.onkeyup = () => this.m_key = undefined;
@@ -100,12 +101,14 @@ export class Manager
     this.m_buttom = new Obstacle(() => { });
     this.m_buttom.setStart(Vektor.create(0, this.m_size[1]));
     this.m_buttom.setSize(Vektor.create(this.m_size[0], 0));
+    this.performRender();
   }
 
   addPlayer(handler: renderHandler, size: vektor)
   {
     this.m_Player = new Player(handler);
     this.startGame(size);
+    this.performRender();
   }
 
   private startGame(size: vektor)
@@ -146,6 +149,7 @@ export class Manager
     }
     this.m_obstaclManager.prepareObstacles();
     this.setPlayerParameters();
+    this.performRender();
   }
 
   private performCalculation()
