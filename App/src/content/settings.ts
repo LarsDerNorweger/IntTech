@@ -1,6 +1,6 @@
 import { vektor } from "../helpers/Vektor.js";
 import { create, createText, role } from "../helpers/dom.js";
-import { createButton } from "../helpers/picoCss.js";
+import { createButton, createSlider } from "../helpers/picoCss.js";
 
 export interface settings
 {
@@ -17,17 +17,20 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
 
   createButton('', () => mod.open = false, a, false, 'close', 'secondary');
 
-  let sl = createObstacleSlider(a, preVal.obstacleCount);
+  let oCount = createSlider('Anzahl der Hindernisse', (x) => { }, 5, 50, a);
+  oCount.setValue(preVal.obstacleCount);
+  let oSize = createSlider('Breite der Hindernisse', (x) => { }, 50, 500, a);
+  oSize.setValue(preVal.obstaclewitdth);
+
   create('input', a);
   let g = create('footer', a, 'grid');
   createButton('Abbrechen', () => mod.open = false, g, false, 'secondary');
   createButton('Anwenden', () =>
   {
     mod.open = false;
-    onSave({ ...preVal, ...{ obstacleCount: Number.parseInt(sl.value) } });
+    onSave({ ...preVal, ...{ obstaclewitdth: oSize.value(), obstacleCount: oCount.value() } });
   }, g
   );
-
   return mod;
 }
 
