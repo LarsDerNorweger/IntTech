@@ -27,6 +27,7 @@ export class Manager
     if (this.m_Player)
       this.m_Player.onScoreChange = callback;
     this.m_fireScoreChange = callback;
+    callback(0);
   }
 
   constructor(parent: HTMLElement, size: vektor)
@@ -54,6 +55,9 @@ export class Manager
   {
     if (this.m_intervallHandle)
       this.stopGameLoop();
+    if (!this.m_Player)
+      return;
+    this.startGame(this.m_Player.context.size);
     this.m_intervallHandle = window.setInterval(() =>
     {
       this.performCalculation();
@@ -101,6 +105,13 @@ export class Manager
   addPlayer(handler: renderHandler, size: vektor)
   {
     this.m_Player = new Player(handler);
+    this.startGame(size);
+  }
+
+  private startGame(size: vektor)
+  {
+    if (!this.m_Player)
+      return;
     if (this.m_fireScoreChange)
       this.m_Player.onScoreChange = this.m_fireScoreChange;
     let s = Vektor.subtract(this.m_size, size);
@@ -109,13 +120,17 @@ export class Manager
     this.m_Player.setStart(s);
     this.m_Player.setSize(size);
     this.setPlayerParameters();
+
+    this.m_Player.reset();
+    this.m_obstaclManager.resetObstacles();
+    this.m_fireScoreChange && this.m_fireScoreChange(0);
   }
 
   private setPlayerParameters()
   {
     if (!this.m_Player)
       return;
-    this.m_Player.jumpSize = (this.m_size[1] / this.m_obstaclManager.count) * 1.3;
+    this.m_Player.jumpSize = this.m_Player.context.size[1] * 6;
     let tmp = Math.floor(this.m_size[0] / 50);
     this.m_Player.offset = tmp;
     console.log(tmp);

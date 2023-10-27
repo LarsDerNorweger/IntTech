@@ -42,6 +42,11 @@ export class Player extends PhysikalEntity
     this.m_context.orientation = Orientation.right;
   }
 
+  reset()
+  {
+    this.m_lastscore = 0;
+  }
+
   performGameCycle(gravity: number)
   {
     this.m_jump = this.m_jump > 0 ? this.m_jump - 2 * gravity || 1.2 : 0;

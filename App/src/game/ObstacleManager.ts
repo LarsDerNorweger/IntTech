@@ -42,6 +42,14 @@ export class ObstacleManager
     this.m_obstacles.push(obstacle);
   }
 
+  resetObstacles()
+  {
+    Obstacle.reset();
+    for (let o of this.m_obstacles)
+      o.setNextId();
+    this.prepareObstacles();
+  }
+
   prepareObstacles()
   {
     this.m_obstacles.reverse();

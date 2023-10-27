@@ -9,15 +9,20 @@ import { renderHandler } from "./interfaces.js";
 
 export class Obstacle extends PhysikalEntity
 {
-    constructor(renderhandle: renderHandler)
-    {
-        super(renderhandle);
-        this.setNextId();
-    }
+  constructor(renderhandle: renderHandler)
+  {
+    super(renderhandle);
+    this.setNextId();
+  }
 
-    setNextId()
-    {
-        this.m_context.id = Obstacle.m_Id++;
-    }
-    static m_Id = 0;
+  static reset()
+  {
+    Obstacle.m_Id = 0;
+  }
+
+  setNextId()
+  {
+    this.m_context.id = Obstacle.m_Id++;
+  }
+  static m_Id = 0;
 }
