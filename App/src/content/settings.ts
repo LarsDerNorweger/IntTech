@@ -23,7 +23,7 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   oSize.setValue(preVal.obstaclewitdth);
 
   create('input', a);
-  let g = create('footer', a, 'grid');
+  let g = create('footer', a);
   createButton('Abbrechen', () => mod.open = false, g, false, 'secondary');
   createButton('Anwenden', () =>
   {
