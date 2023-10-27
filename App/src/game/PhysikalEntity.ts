@@ -32,7 +32,7 @@ export abstract class PhysikalEntity extends Entity
   setStart(value: vektor)
   {
     super.setStart(value);
-    this.m_boundary.begin = Array.from(value);
+    this.m_boundary.begin = value.map(x => Math.floor(x));
   }
 
   move(delta: vektor)
