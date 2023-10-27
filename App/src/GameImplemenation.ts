@@ -5,44 +5,39 @@
 
 import { Orientation } from "./game/interfaces.js";
 import { Manager } from "./game/Manager.js";
-import { create } from "./helpers/dom.js";
-import { Vektor } from "./helpers/Vektor.js";
+import { vektor, Vektor } from "./helpers/Vektor.js";
 
 
-
-
-let c = create('div', document.body);
-create('h1', c, "Ein komisches Spiel");
-c.classList.add('container');
-let man = new Manager(c, Vektor.create(400, 900));
-
-
-man.addScene((g, c) =>     
+export function createGame(target: HTMLElement, ratio: vektor, obstacleCount: number, obstacleWidth: number)
 {
-  c.fillStyle = "#3095A1";
-  c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
-});
+  let man = new Manager(target, ratio);
 
-man.addPlayer((g, c) =>
-{
-  switch (g.orientation)
+  man.addScene((g, c) =>
   {
-    case Orientation.left: c.fillStyle = "#F0F"; break;
-    case Orientation.right: c.fillStyle = "#FfF"; break;
-    case Orientation.none: c.fillStyle = "#Ff0"; break;
-  }
+    c.fillStyle = "#3095A1";
+    c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
+  });
 
-  c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
-}, Vektor.create(10, 20));
+  man.addPlayer((g, c) =>
+  {
+    switch (g.orientation)
+    {
+      case Orientation.left: c.fillStyle = "#F0F"; break;
+      case Orientation.right: c.fillStyle = "#FfF"; break;
+      case Orientation.none: c.fillStyle = "#Ff0"; break;
+    }
 
-man.addObstacele((g, c) =>
-{
-  c.fillStyle = "#EEE";
-  c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
-  c.fillStyle = "#000";
-  c.fillText(g.id + '', g.start[0], g.start[1] + g.size[1]);
-}, 10, Vektor.create(50, 10));
+    c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
+  }, Vektor.create(10, 20));
 
-man.handleGameOver = () => { console.log("You have Lost"); };
-man.handleScoreChange = (s) => { console.log("score:", s); };
-man.startGameLoop();
+  man.addObstacele((g, c) =>
+  {
+    c.fillStyle = "#EEE";
+    c.fillRect(g.start[0], g.start[1], g.size[0], g.size[1]);
+    c.fillStyle = "#000";
+    c.fillText(g.id + '', g.start[0], g.start[1] + g.size[1]);
+  }, obstacleCount, Vektor.create(obstacleWidth, 10));
+
+  return man;
+}
+
