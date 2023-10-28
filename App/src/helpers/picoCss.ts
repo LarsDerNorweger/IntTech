@@ -1,9 +1,10 @@
-import { create, role } from "./dom.js";
+import { create, createText, role } from "./dom.js";
 
 export
 {
   createButton,
-  createSlider
+  createSlider,
+  createAcordion,
 };
 
 
@@ -32,7 +33,7 @@ function createSlider(text: string, oninput: (value: number) => void, min: numbe
   s.min = min + '';
   s.max = max + '';
   setText();
-  s.onchange = () =>
+  s.oninput = () =>
   {
     setText();
     oninput(Number.parseInt(s.value));
@@ -54,6 +55,13 @@ function createSlider(text: string, oninput: (value: number) => void, min: numbe
   {
     l.innerText = text + ' ' + s.value;
   }
+}
+
+function createAcordion(text: string, target: HTMLElement)
+{
+  let res = create('details', target);
+  createText('summary', res, text);
+  return res;
 }
 
 let id = 0;
