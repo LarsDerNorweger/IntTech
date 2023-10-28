@@ -3,6 +3,7 @@ import { keyMap } from "../game/interfaces.js";
 import { SelectionManager } from "../helpers/SelectionManager.js";
 import { Vektor, vektor } from "../helpers/Vektor.js";
 import { create, createText, role } from "../helpers/dom.js";
+import { LocalStorage } from "../helpers/localStorage.js";
 import { createAcordion, createButton, createSlider } from "../helpers/picoCss.js";
 
 export interface settings
@@ -15,6 +16,8 @@ export interface settings
 
 export function createSettings(onSave: (val: settings) => void, preVal: settings)
 {
+  let settings = LocalStorage.load("GameSettings", preVal);
+
   let mod = create('dialog', document.body);
   let manager = new SelectionManager<HTMLDetailsElement>(e =>
   {
@@ -29,9 +32,9 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   manager.add(setObstc);
 
   let oCount = createSlider('Anzahl der Hindernisse', (x) => { }, 5, 50, setObstc);
-  oCount.setValue(preVal.obstacleCount);
+  oCount.setValue(settings.obstacleCount);
   let oSize = createSlider('Breite der Hindernisse', (x) => { }, 50, 500, setObstc);
-  oSize.setValue(preVal.obstaclewitdth);
+  oSize.setValue(settings.obstaclewitdth);
 
   let setRatio = createAcordion('Spielfeld', node);
   manager.add(setRatio);
@@ -52,9 +55,9 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
     },
     e => e.classList.add('outline')
   );
-  for (let i of Object.keys(preVal.keys))
+  for (let i of Object.keys(settings.keys))
   {
-    let x = createButton(`${i} => "${preVal.keys[<keyof keyMap>i]}"`, _ => { }, setKeys, true, "secondary", "outline") as HTMLButtonElement;
+    let x = createButton(`${i} => "${settings.keys[<keyof keyMap>i]}"`, _ => { }, setKeys, true, "secondary", "outline") as HTMLButtonElement;
     keys.add(x);
     x.setAttribute('_data', i);
   }
@@ -68,11 +71,11 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
 
     let k = event.key.toLowerCase();
 
-    if (Object.values(preVal.keys).find(x => x == k))
+    if (Object.values(settings.keys).find(x => x == k))
       return;
     node.onkeydown = () => { };
-    preVal.keys[i] = k;
-    element.innerText = `${i} => "${preVal.keys[<keyof keyMap>i]}"`;
+    settings.keys[i] = k;
+    element.innerText = `${i} => "${settings.keys[<keyof keyMap>i]}"`;
     element.classList.add('outline');
     event.preventDefault();
   };
@@ -81,9 +84,9 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   createButton('Anwenden', () =>
   {
     mod.open = false;
-    onSave({
-      obstaclewitdth: oSize.value(), obstacleCount: oCount.value(), ratio: renderAndCalculateRatio(), keys: preVal.keys
-    });
+    let s = { obstaclewitdth: oSize.value(), obstacleCount: oCount.value(), ratio: renderAndCalculateRatio(), keys: settings.keys };
+    LocalStorage.save("GameSettings", s);
+    onSave(s);
   }, g
   );
 

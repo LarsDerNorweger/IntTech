@@ -8,18 +8,20 @@ import { createGame } from "./GameImplemenation.js";
 import { createSettings, settings } from "./content/settings.js";
 import { Vektor, vektor } from "./helpers/Vektor.js";
 import { clear, create, role } from "./helpers/dom.js";
+import { LocalStorage } from "./helpers/localStorage.js";
+import { createButton } from "./helpers/picoCss.js";
 
 
 
 export function createPage()
 {
-  let s = {
+  let s = LocalStorage.load("GameSettings", {
     obstacleCount: 10, obstaclewitdth: 50, ratio: Vektor.create(600, 900), keys: {
       jump: ' ',
       left: 'a',
       right: 'd'
     }
-  };
+  });
   let sett = createSettings(openGame, s);
 
   let page = create('main', document.body, 'container');
@@ -43,13 +45,11 @@ export function createPage()
   let btnSet = create('button', info, 'outline', 'secondary');
   btnSet.innerText = 'Einstellungen';
   btnSet.onclick = () => sett.open = true;
-
+  let btn = createButton('Start', () => { }, info, true) as HTMLButtonElement;
 
   let cb = create('div', grid);
   cb.id = 'GameButton';
-
-  let btn = create('button', cb, 'primary', 'outline');
-  btn.innerText = 'Start';
+  let pg = create('progress', cb);
 
   openGame(s);
 
@@ -58,6 +58,8 @@ export function createPage()
     clear(trg);
     let game = createGame(trg, settings.ratio, settings.obstacleCount, settings.obstaclewitdth);
     game.keyMap = settings.keys;
+    let h = LocalStorage.load('highscore', 0);
+    pg.max = h;
     btn.onclick = () =>
     {
       btn.blur();
@@ -70,11 +72,17 @@ export function createPage()
     {
       btn.disabled = false;
       btnSet.disabled = false;
-
+      LocalStorage.save('highscore', h);
       btn.innerText = 'neu Starten';
       btn.focus();
     };
-    game.handleScoreChange = x => points.innerText = `${x} Punkte`;
+    game.handleScoreChange = x =>
+    {
+      if (x > h)
+        h = x;
+      else pg.value = x;
+      points.innerText = `${x} Punkte`;
+    };
   }
 }
 
