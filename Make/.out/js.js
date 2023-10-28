@@ -10,7 +10,7 @@ async function rollupFiles(base, inpFile, outFile) {
     if (!inp.endsWith('.d.ts')) {
         inp = inp.replace('.ts', '.js');
         out = out.replace('.ts', '.js');
-        let bundle = await (0, rollup_1.rollup)({ input: inp });
+        let bundle = await (0, rollup_1.rollup)({ input: inp, treeshake: true });
         return await bundle.write({ file: out, format: 'esm' });
     }
     if (!out.endsWith('.d.ts')) {

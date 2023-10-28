@@ -17,6 +17,18 @@ async function run(Options, base) {
         await processJavascript(base, Options, tsconfig);
     if (Options.sass)
         processCss(base, Options, tsconfig);
+    if (process.argv[2] == '--watch') {
+        if (Options.sass)
+            (0, helper_1.fileWatcher)((0, path_1.dirname)((0, path_1.join)(base, Options.sass)), (_, f) => {
+                console.log('Sass change: ' + f);
+                processCss(base, Options, tsconfig);
+            });
+        if (Options.typescript)
+            (0, helper_1.fileWatcher)((0, path_1.dirname)((0, path_1.join)(base, Options.typescript)), (_, f) => {
+                console.log('Typescript change: ' + f);
+                processJavascript(base, Options, tsconfig);
+            });
+    }
 }
 exports.run = run;
 async function processCss(base, Options, tsconfig) {
