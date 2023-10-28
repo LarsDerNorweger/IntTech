@@ -8,7 +8,7 @@ export
 };
 
 
-function createButton(text: string, onclick: () => void, target?: HTMLElement, big?: boolean, ...classes: string[]): HTMLAnchorElement | HTMLButtonElement
+function createButton(text: string, onclick: (btn: HTMLElement, event: MouseEvent) => void, target?: HTMLElement, big?: boolean, ...classes: string[])
 {
   let res = create(big ? 'button' : 'a', target, ...classes);
   if (res instanceof HTMLAnchorElement)
@@ -17,7 +17,7 @@ function createButton(text: string, onclick: () => void, target?: HTMLElement, b
     role(res, 'button');
   }
   res.innerText = text;
-  res.onclick = onclick;
+  res.onclick = e => onclick(res, e);
   return res;
 }
 

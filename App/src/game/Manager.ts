@@ -16,7 +16,7 @@ export class Manager
 {
   static get nextID(): number { return ++Manager.m_lastID; }
 
-  readonly keyMap: keyMap = {
+  keyMap: keyMap = {
     jump: " ",
     left: "a",
     right: "d"

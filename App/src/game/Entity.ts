@@ -12,8 +12,8 @@ import { Manager } from "./Manager.js";
 export abstract class Entity
 {
   get context(): GraphikContext { return this.m_context; }
-  setSize(value: vektor) { this.m_context.size = Array.from(value); }
-  setStart(value: vektor) { this.m_context.start = Array.from(value); }
+  setSize(value: vektor) { this.m_context.size = value.map(x => Math.floor(x)); }
+  setStart(value: vektor) { this.m_context.start = value.map(x => Math.floor(x)); }
 
   constructor(renderHandle: renderHandler)
   {

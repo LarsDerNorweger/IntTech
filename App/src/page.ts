@@ -13,7 +13,14 @@ import { clear, create, role } from "./helpers/dom.js";
 
 export function createPage()
 {
-  let sett = createSettings(openGame, { obstacleCount: 10, obstaclewitdth: 50, ratio: Vektor.create(600, 900) });
+  let s = {
+    obstacleCount: 10, obstaclewitdth: 50, ratio: Vektor.create(600, 900), keys: {
+      jump: ' ',
+      left: 'a',
+      right: 'd'
+    }
+  };
+  let sett = createSettings(openGame, s);
 
   let page = create('main', document.body, 'container');
   let grid = create('div', page);
@@ -44,13 +51,13 @@ export function createPage()
   let btn = create('button', cb, 'primary', 'outline');
   btn.innerText = 'Start';
 
-  openGame({ obstacleCount: 10, obstaclewitdth: 50, ratio: Vektor.create(600, 900) });
+  openGame(s);
 
   function openGame(settings: settings)
   {
     clear(trg);
     let game = createGame(trg, settings.ratio, settings.obstacleCount, settings.obstaclewitdth);
-
+    game.keyMap = settings.keys;
     btn.onclick = () =>
     {
       btn.blur();
