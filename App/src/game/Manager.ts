@@ -67,7 +67,7 @@ export class Manager
       this.performCalculation();
       window.requestAnimationFrame(this.performRender.bind(this));
     }, executionTime || 10);
-    this.m_keyTimer = setInterval(this.m_handleKey.bind(this), 50);
+    this.m_keyTimer = setInterval(this.m_handleKey.bind(this), 25);
   }
 
   stopGameLoop(propagate?: boolean)
@@ -147,7 +147,7 @@ export class Manager
     if (!this.m_Player)
       return;
     this.m_Player.jumpSize = this.m_Player.context.size[1] * 6;
-    let tmp = Math.floor(this.m_size[0] / 50);
+    let tmp = Math.floor(this.m_size[0] / 100);
     this.m_Player.offset = tmp;
     console.log(tmp);
   }
