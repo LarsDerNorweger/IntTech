@@ -22,6 +22,10 @@ export class Manager
     right: "d"
   };
 
+  get score(): number
+  {
+    return this.m_Player?.score ?? 0;
+  }
   set handleGameOver(callback: (instanciated: boolean) => void) { this.m_handleGameOver = callback; }
   set handleScoreChange(callback: (score: number) => void)
   {
@@ -147,7 +151,7 @@ export class Manager
     if (!this.m_Player)
       return;
     this.m_Player.jumpSize = this.m_Player.context.size[1] * 6;
-    let tmp = Math.floor(this.m_size[0] / 100);
+    let tmp = Math.ceil(this.m_size[0] / 100);
     this.m_Player.offset = tmp;
     console.log(tmp);
   }
