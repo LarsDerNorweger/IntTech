@@ -19,6 +19,15 @@
   "files.exclude": {
     "**/.vscode/": true,
     "**/.git": true,
-  }
+  },
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.multiRootWorkspaceName": "App"
+},
+"extensions": {
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "ritwickdey.liveserver",
+    "yoavbls.pretty-ts-errors",
+  ]
 }
 }
