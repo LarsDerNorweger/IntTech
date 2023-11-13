@@ -1,0 +1,12 @@
+@startuml hallo
+package game{
+    abstract class Entity 
+    class Globals
+    class Manager
+    class Obstacle
+    class ObstacleManager
+    class PhysikalEntity
+    class Player
+    class Scene
+}
+@enduml
