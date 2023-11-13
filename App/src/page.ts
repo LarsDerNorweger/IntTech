@@ -6,8 +6,8 @@
 
 import { createGame } from "./GameImplemenation.js";
 import { createSettings, settings } from "./content/settings.js";
-import { Vektor, vektor } from "./helpers/Vektor.js";
-import { clear, create, createText, role } from "./helpers/dom.js";
+import { Vektor } from "./helpers/Vektor.js";
+import { clear, create, createText } from "./helpers/dom.js";
 import { LocalStorage } from "./helpers/localStorage.js";
 import { createButton } from "./helpers/picoCss.js";
 
@@ -46,7 +46,11 @@ export function createPage()
   let btnSet = create('button', info, 'outline', 'secondary');
   btnSet.innerText = 'Einstellungen';
 
-  btnSet.onclick = () => { sett.open = true, sett.focus(); };
+  btnSet.onclick = () =>
+  {
+    sett.open = true;
+    sett.focus();
+  };
   let btn = createButton('Start', () => { }, info, true) as HTMLButtonElement;
   btn.focus();
 
@@ -97,6 +101,3 @@ export function createPage()
     };
   }
 }
-
-
-function createHeader() { }
