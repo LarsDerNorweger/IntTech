@@ -37,6 +37,7 @@ export class Manager
 
   constructor(parent: HTMLElement, size: vektor)
   {
+    Obstacle.reset();
     let canvas = create('canvas', parent);
     canvas.width = size[0];
     canvas.height = size[1];
@@ -153,7 +154,6 @@ export class Manager
     this.m_Player.jumpSize = this.m_Player.context.size[1] * 6;
     let tmp = Math.ceil(this.m_size[0] / 100);
     this.m_Player.offset = tmp;
-    console.log(tmp);
   }
 
   addObstacele(handler: renderHandler, maxCount: number, size: vektor)

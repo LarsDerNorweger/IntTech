@@ -119,6 +119,6 @@ export class ObstacleManager
     return res;
   }
 
-  m_obstacles: Obstacle[] = [];
-  m_size: vektor;
+  private m_obstacles: Obstacle[] = [];
+  private m_size: vektor;
 };

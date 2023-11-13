@@ -1,13 +1,25 @@
 @import '../lib/pico-1.5.9/pico.css'
 
-main
-  height: 100vh
+html
+  height: 100%
+
+body
+  height: 100%
+.container-fluid
+  height: 10%
+  ul
+    li
+      padding-top: 0
+      padding-bottom: 0
+.container
+  height: 80%
+  padding: 0
 
 #GameGrid
   display: grid
-  grid-template-columns: 20% 1fr 5%
-  grid-template-rows: minmax(0,1fr) 10%
-  grid-template-areas: "info game ." ".button ."
+  grid-template-columns: 20% 1fr
+  grid-template-rows: minmax(0,1fr) 5%
+  grid-template-areas: "info game" ".button"
   height: 100%
   #GameInfo
     grid-area: info

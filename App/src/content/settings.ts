@@ -19,14 +19,17 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   let settings = LocalStorage.load("GameSettings", preVal);
 
   let mod = create('dialog', document.body);
+  let node = create('article', mod);
+  createButton('', () => mod.open = false, node, false, 'close', 'secondary');
   let manager = new SelectionManager<HTMLDetailsElement>(e =>
   {
     e.open = true;
   }, e => e.open = false, true);
 
-  let node = create('article', mod);
 
-  createButton('', () => mod.open = false, node, false, 'close', 'secondary');
+
+  //------------------- Obstacles
+
 
   let setObstc = createAcordion('Hindernisse', node);
   manager.add(setObstc);
@@ -36,6 +39,8 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   let oSize = createSlider('Breite der Hindernisse', (x) => { }, 50, 500, setObstc);
   oSize.setValue(settings.obstaclewitdth);
 
+  //------------------- Gamefield
+
   let setRatio = createAcordion('Spielfeld', node);
   manager.add(setRatio);
   let heigh = createSlider('Höhe', renderAndCalculateRatio, 1, 16, setRatio);
@@ -44,6 +49,7 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   width.setValue(9);
   let p = create('p', setRatio);
 
+  //------------------- KEYS
   let setKeys = createAcordion('Tasten', node);
   manager.add(setKeys);
 
@@ -61,6 +67,19 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
     keys.add(x);
     x.setAttribute('_data', i);
   }
+
+  //------------------- Properties
+
+  let setProp = createAcordion('Werte', node);
+  manager.add(setProp);
+  let high = create('p', setProp);
+  createButton('Highscore Zurücksetzen', () =>
+  {
+    LocalStorage.save('highscore', 0);
+    updateScore();
+  }, setProp, true);
+  mod.onfocus = () => updateScore();
+  function updateScore() { high.innerText = `Der Highscore liegt bei ${LocalStorage.load('highscore', 0)}`; };
 
   function handleKeyDown(element: HTMLButtonElement, event: KeyboardEvent)
   {
