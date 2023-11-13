@@ -28,6 +28,7 @@ sudo apt install -y nginx ||( echo "failed to install nginx" && exit 1)
 
 
 createFolder /data/
+# Berechtigung sollte überdacht werden vllt user anpassen
 sudo chmod 777 /data
 createFolder /data/www/
 clearOrCreateFolder /data/www/jump/

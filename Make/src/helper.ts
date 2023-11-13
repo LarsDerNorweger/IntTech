@@ -24,6 +24,7 @@ function getAbsoluteOrResolve(base: string, path: string) {
 type FileChangeEvent = (type: WatchEventType, filename: string) => void
 
 function fileWatcher(path: string, handleChange: FileChangeEvent) {
+  // nur directorys werden überwacht => resourcenschonung für Linux
   if (!statSync(path).isDirectory())
     return
 
@@ -31,6 +32,7 @@ function fileWatcher(path: string, handleChange: FileChangeEvent) {
 
   let last = ''
   let timer: NodeJS.Timeout | null = null
+  // Kann nur unter windows rekursiv benutzt werden, da inotify nur meldungen auf directory ebene unterstützt
   watch(path, { recursive: process.platform == 'win32' }, (e, f) => handler(e, f ?? ''))
   if (process.platform == 'win32')
     return
@@ -46,7 +48,6 @@ function fileWatcher(path: string, handleChange: FileChangeEvent) {
       timer = setTimeout(() => { timer = null }, 50)
       last = filename
     }
-
   }
 }
 
