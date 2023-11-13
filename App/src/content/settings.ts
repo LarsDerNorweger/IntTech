@@ -84,7 +84,6 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   function handleKeyDown(element: HTMLButtonElement, event: KeyboardEvent)
   {
     let i = <keyof keyMap | undefined>element.getAttribute('_data');
-    console.log(element, event, typeof i);
     if (!i)
       return console.warn('No key is stored on Button');
 

@@ -71,7 +71,6 @@ export class ObstacleManager
     let ok: Obstacle[] = [];
     let n: Obstacle[] = [];
     let f = this.m_size[1] / (this.m_size[1] - (this.m_size[1] / 3));
-    console.log(f);
     let ax = Globals.gravity * f;
     let s = this.m_size[0] - this.boundaryBox.size[0];
     for (let o of this.m_obstacles)
