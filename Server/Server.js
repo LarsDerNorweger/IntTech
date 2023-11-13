@@ -52,6 +52,7 @@ function mime( p ) {
     case "htm": return "text/html";
     case "js": return "text/javascript";
     case "css": return "text/css";
+    case "png": return "image/png";
     default: return "text/plain";
   }
 }

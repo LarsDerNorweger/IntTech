@@ -6,19 +6,19 @@
   {
     "name":"DevServer",
     "path": "./Server"
-  }
+  },
   {
     "name":"Deployment",
     "path": "./deployment"
-  }
+  },
   {
     "path": "./Make"
   }
 ],
 "settings": {
-"files.exclude": {
-  "**/.vscode/": true,
-  "**/.git": true,
-}
+  "files.exclude": {
+    "**/.vscode/": true,
+    "**/.git": true,
+  }
 }
 }

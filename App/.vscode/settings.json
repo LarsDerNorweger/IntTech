@@ -9,5 +9,6 @@
     "**/.out": true,
     "**/.outTest": true,
     "node_modules/**": true,
-  }
+  },
+  "liveServer.settings.port": 5500
 }
