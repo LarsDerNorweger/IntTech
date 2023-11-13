@@ -13,6 +13,7 @@
   "author": "colin boettger, oskar wolny",
   "license": "ISC",
   "dependencies": {
+    "node": "^21.1.0",
     "test": "^3.3.0",
     "typescript": "^5.1.6"
   }

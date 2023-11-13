@@ -5,6 +5,7 @@
 /*------------------------------------------------*/
 
 import { createGame } from "./GameImplemenation.js";
+import { createInfo } from "./content/info.js";
 import { createSettings, settings } from "./content/settings.js";
 import { Vektor, vektor } from "./helpers/Vektor.js";
 import { clear, create, createText, role } from "./helpers/dom.js";
@@ -23,6 +24,7 @@ export function createPage()
     }
   });
   let sett = createSettings(openGame, s);
+  let cinfo = createInfo();
   let header = create('nav', document.body, 'container-fluid');
 
   let grp = create('ul', header);
@@ -41,7 +43,10 @@ export function createPage()
   info.id = "GameInfo";
 
 
-  let btnInfo = createButton('Info', () => { }, btnGrp, false);
+  let btnInfo = createButton('Info', () =>
+  {
+    cinfo.open = true;
+  }, btnGrp, false);
 
   let btnSet = create('button', info, 'outline', 'secondary');
   btnSet.innerText = 'Einstellungen';
