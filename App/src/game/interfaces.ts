@@ -29,7 +29,7 @@ export interface SimulationContext
   size: vektor,
 };
 
-export interface keyMap
+export interface KeyMap
 {
   jump: string,
   left: string,

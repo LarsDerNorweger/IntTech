@@ -7,7 +7,7 @@
 import { vektor, Vektor } from "../helpers/Vektor.js";
 import { create } from "../helpers/dom.js";
 import { ObstacleManager } from "./ObstacleManager.js";
-import { keyMap, renderHandler } from "./interfaces.js";
+import { KeyMap, renderHandler } from "./interfaces.js";
 import { Obstacle } from "./obstacle.js";
 import { Player } from "./player.js";
 import { Scene } from "./scene.js";
@@ -16,7 +16,7 @@ export class Manager
 {
   static get nextID(): number { return ++Manager.m_lastID; }
 
-  keyMap: keyMap = {
+  keyMap: KeyMap = {
     jump: " ",
     left: "a",
     right: "d"
@@ -71,7 +71,7 @@ export class Manager
     {
       this.performCalculation();
       window.requestAnimationFrame(this.performRender.bind(this));
-    }, executionTime || 10);
+    }, executionTime ?? 10);
     this.m_keyTimer = setInterval(this.m_handleKey.bind(this), 25);
   }
 
@@ -171,7 +171,7 @@ export class Manager
 
   private performCalculation()
   {
-    this.m_Player && this.m_Player.performGameCycle(this.m_obstaclManager.HandleCollisionAndGetGravity(this.m_Player));
+    this.m_Player?.performGameCycle(this.m_obstaclManager.HandleCollisionAndGetGravity(this.m_Player));
     this.m_checkBoundarys();
   }
 
@@ -195,8 +195,8 @@ export class Manager
 
   private performRender()
   {
-    this.m_scene && this.m_scene.render(this.m_context);
-    this.m_Player && this.m_Player.render(this.m_context);
+    this.m_scene?.render(this.m_context);
+    this.m_Player?.render(this.m_context);
     this.m_obstaclManager.render(this.m_context);
   }
 

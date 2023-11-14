@@ -40,23 +40,9 @@ export abstract class PhysikalEntity extends Entity
     this.setStart(Vektor.add(this.m_boundary.begin, delta));
   }
 
-  moveTo(position: vektor)
-  {
-    this.setStart(position);
-  }
-
   checkCollision(entity: PhysikalEntity): boolean
   {
     return isColliding(entity.boundaryBox, this.boundaryBox);
-  }
-
-  checkButtom(entity: PhysikalEntity, tollerance: number): boolean
-  {
-    let b1 = Vektor.add(this.boundaryBox.begin, this.boundaryBox.size);
-    let b2 = Vektor.add(entity.boundaryBox.begin, entity.boundaryBox.size);
-
-    let r = Vektor.subtract(Vektor.add(b2, [tollerance, tollerance]), b1);
-    return r[1] <= 0;
   }
 
   protected m_boundary: area;

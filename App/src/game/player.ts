@@ -18,7 +18,7 @@ export class Player extends PhysikalEntity
     if (this.m_lastscore >= value)
       return;
     this.m_lastscore = value;
-    this.fireScoreChange && this.fireScoreChange(this.m_lastscore);
+    if (this.fireScoreChange) this.fireScoreChange(this.m_lastscore);
   }
   set jumpSize(value: number) { this.m_jumpsize = Math.ceil(value / 2.4); }
   get height(): number { return this.boundaryBox.begin[1]; }

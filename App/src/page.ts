@@ -6,7 +6,7 @@
 
 import { createGame } from "./GameImplemenation.js";
 import { createInfo } from "./content/info.js";
-import { createSettings, settings } from "./content/settings.js";
+import { createSettings, Settings } from "./content/settings.js";
 import { Vektor } from "./helpers/Vektor.js";
 import { clear, create, createText } from "./helpers/dom.js";
 import { LocalStorage } from "./helpers/localStorage.js";
@@ -66,7 +66,7 @@ export function createPage()
 
   openGame(s);
 
-  function openGame(settings: settings)
+  function openGame(settings: Settings)
   {
     clear(trg);
     let game = createGame(trg, settings.ratio, settings.obstacleCount, settings.obstaclewitdth);

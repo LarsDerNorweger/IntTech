@@ -1,12 +1,29 @@
 @startuml hallo
 package game{
-    abstract class Entity 
+    abstract class Entity
+    {
+        + render()
+    } 
     class Globals
     class Manager
-    class Obstacle
+    class Obstacle{
+        + setNextId()
+    }
     class ObstacleManager
-    abstract PhysikalEntity
-    class Player
+    {
+        + assignObstacle(Obstacle)
+        + prepareObstacle()
+        + shiftObstacle()
+        + render()
+        + HandleCollisionAndGetGravity()
+    }
+    abstract PhysikalEntity{
+        + move(vektor)
+        + checkCollision(PhysikalEntity)
+    }
+    class Player{
+        + performGameCycle()
+    }
     class Scene
 
     Entity --|> PhysikalEntity
@@ -18,7 +35,7 @@ package game{
 
     Manager *-- ObstacleManager
     Manager *-- Player
-    Manager *-- Scene
+    Manager *-- Scene   
 }
 
 

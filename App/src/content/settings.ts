@@ -1,20 +1,19 @@
-import { Manager } from "../game/Manager.js";
-import { keyMap } from "../game/interfaces.js";
+import { KeyMap } from "../game/interfaces.js";
 import { SelectionManager } from "../helpers/SelectionManager.js";
 import { Vektor, vektor } from "../helpers/Vektor.js";
-import { create, createText, role } from "../helpers/dom.js";
+import { create } from "../helpers/dom.js";
 import { LocalStorage } from "../helpers/localStorage.js";
 import { createAcordion, createButton, createSlider } from "../helpers/picoCss.js";
 
-export interface settings
+export interface Settings
 {
   ratio: vektor,
-  keys: keyMap,
+  keys: KeyMap,
   obstaclewitdth: number,
   obstacleCount: number,
 }
 
-export function createSettings(onSave: (val: settings) => void, preVal: settings)
+export function createSettings(onSave: (val: Settings) => void, preVal: Settings)
 {
   let settings = LocalStorage.load("GameSettings", preVal);
 
@@ -25,8 +24,6 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   {
     e.open = true;
   }, e => e.open = false, true);
-
-
 
   //------------------- Obstacles
 
@@ -63,7 +60,7 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
   );
   for (let i of Object.keys(settings.keys))
   {
-    let x = createButton(`${i} => "${settings.keys[<keyof keyMap>i]}"`, _ => { }, setKeys, true, "secondary", "outline") as HTMLButtonElement;
+    let x = createButton(`${i} => "${settings.keys[<keyof KeyMap>i]}"`, _ => { }, setKeys, true, "secondary", "outline") as HTMLButtonElement;
     keys.add(x);
     x.setAttribute('_data', i);
   }
@@ -83,7 +80,7 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
 
   function handleKeyDown(element: HTMLButtonElement, event: KeyboardEvent)
   {
-    let i = <keyof keyMap | undefined>element.getAttribute('_data');
+    let i = <keyof KeyMap | undefined>element.getAttribute('_data');
     if (!i)
       return console.warn('No key is stored on Button');
 
@@ -93,7 +90,7 @@ export function createSettings(onSave: (val: settings) => void, preVal: settings
       return;
     node.onkeydown = () => { };
     settings.keys[i] = k;
-    element.innerText = `${i} => "${settings.keys[<keyof keyMap>i]}"`;
+    element.innerText = `${i} => "${settings.keys[<keyof KeyMap>i]}"`;
     element.classList.add('outline');
     event.preventDefault();
   };
