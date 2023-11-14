@@ -7,8 +7,8 @@ export function createInfo()
   let node = create('article', mod);
   createButton('', () => mod.open = false, node, false, 'close', 'secondary');
   createText('h2', node, 'Infomation');
-
-  createText("p", node, 'Das ist ein Projekt von Studenten der BA Glauchau für Internettechnologieen\n Die Autoren sind:');
+  createText("p", node, 'Das ist ein Projekt von Studenten der BA Glauchau für Internettechnologieen');
+  createText("p", node, 'Die Autoren sind:');
   let list = create('ul', node);
   createText('li', list, 'Colin Böttger');
   createText('li', list, 'Oskar Wolny');
