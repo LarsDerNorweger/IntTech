@@ -5,7 +5,17 @@ package game{
         + render()
     } 
     class Globals
-    class Manager
+    class Manager{
+        + addObstacle()
+        + addPlayer()
+        + addScene()
+        + startGameLoop()
+        + stopGameLoop()
+
+        - handleKey()
+        - performCalculation()
+        - performRender()
+    }
     class Obstacle{
         + setNextId()
     }
